@@ -2,7 +2,7 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk, Pango
 import webbrowser
 import json
 import os
@@ -14,7 +14,7 @@ class LauncherWindow(Gtk.Window):
         self.set_resizable(False)
         self.connect("destroy", Gtk.main_quit)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)  # Imposta uno spacing verticale di 10 pixel
         self.add(vbox)
 
         config_path = os.path.join(os.path.dirname(__file__), "bin", "config.json")
@@ -31,23 +31,27 @@ class LauncherWindow(Gtk.Window):
 
         chat_url = config.get("url")
 
-        button_text = config.get("button_text", "Apri Chat GPT")
+        button_text = config["button_text"]  # Ora non c'è un valore predefinito
+        button_font_size = config.get("button_font_size", 12)
+
+        # Imposta uno spacing di 10 pixel dai bordi laterali e dal bordo superiore per entrambi i pulsanti
         button = Gtk.Button.new_with_label(button_text)
-        button.set_margin_top(10)
-        button.set_margin_bottom(10)
         button.set_margin_start(10)
         button.set_margin_end(10)
+        button.set_margin_top(10)
+        font_desc = Pango.FontDescription()
+        font_desc.set_size(int(button_font_size * Pango.SCALE))
+        button.get_child().modify_font(font_desc)
         button.connect("clicked", self.open_chat_url)
         vbox.pack_start(button, True, True, 0)
 
         watermark_text = "© 2024 Sn00kY89, GNU GPL License"
         watermark_button = Gtk.Button.new_with_label(watermark_text)
-        watermark_button.set_margin_top(10)
-        watermark_button.set_margin_bottom(10)
         watermark_button.set_margin_start(10)
         watermark_button.set_margin_end(10)
+        watermark_button.set_margin_top(10)
         watermark_button.connect("clicked", self.open_watermark_url)
-        vbox.pack_end(watermark_button, False, False, 0)
+        vbox.pack_end(watermark_button, False, False, 10)  # Imposta uno spacing di 10 pixel dal bordo inferiore
 
     def open_chat_url(self, widget):
         config_path = os.path.join(os.path.dirname(__file__), "bin", "config.json")
