@@ -3,8 +3,5 @@
   "button_text": "Start Google",
   "window_title": "Launcher",
   "window_width": 800,
-  "window_height": 200,
-  "button_width_ratio": 0.3,
-  "button_height_ratio": 0.1,
-  "watermark_url": "https://github.com/Sn00kY89"
+  "window_height": 400
 }

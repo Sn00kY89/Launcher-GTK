@@ -31,21 +31,21 @@ class LauncherWindow(Gtk.Window):
 
         chat_url = config.get("url")
 
-        # Calcola le dimensioni del pulsante in base alla finestra
-        button_width_ratio = config.get("button_width_ratio", 0.3)
-        button_height_ratio = config.get("button_height_ratio", 0.1)
-        button_width = int(window_width * button_width_ratio)
-        button_height = int(window_height * button_height_ratio)
-
         button_text = config.get("button_text", "Apri Chat GPT")
         button = Gtk.Button.new_with_label(button_text)
+        button.set_margin_top(10)
+        button.set_margin_bottom(10)
+        button.set_margin_start(10)
+        button.set_margin_end(10)
         button.connect("clicked", self.open_chat_url)
         vbox.pack_start(button, True, True, 0)
-        button.set_size_request(button_width, button_height)
 
-        # Watermark fisso
         watermark_text = "© 2024 Sn00kY89, GNU GPL License"
         watermark_button = Gtk.Button.new_with_label(watermark_text)
+        watermark_button.set_margin_top(10)
+        watermark_button.set_margin_bottom(10)
+        watermark_button.set_margin_start(10)
+        watermark_button.set_margin_end(10)
         watermark_button.connect("clicked", self.open_watermark_url)
         vbox.pack_end(watermark_button, False, False, 0)
 
@@ -58,12 +58,8 @@ class LauncherWindow(Gtk.Window):
             webbrowser.open_new(chat_url)
 
     def open_watermark_url(self, widget):
-        config_path = os.path.join(os.path.dirname(__file__), "bin", "config.json")
-        with open(config_path) as f:
-            config = json.load(f)
-        watermark_url = config.get("watermark_url")
-        if watermark_url:
-            webbrowser.open_new(watermark_url)
+        watermark_url = "https://github.com/Sn00kY89"
+        webbrowser.open_new(watermark_url)
 
 win = LauncherWindow()
 win.show_all()
