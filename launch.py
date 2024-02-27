@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#Made by Sn00kY89
 
 import gi
 gi.require_version('Gtk', '3.0')
